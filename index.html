@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PDF Generator</title>
+<title>SEO PDF Bulk Generator</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -16,7 +16,7 @@ table { width:100%; border-collapse:collapse; }
 th,td { border:1px solid #ddd; padding:8px; }
 input { width:100%; padding:6px; }
 .preview img { width:70px; height:100px; object-fit:cover; }
-button { padding:12px 20px; margin-top:15px; background:#667eea; color:#fff; border:none; cursor:pointer; }
+button { padding:12px 20px; margin-top:15px; background:#4a5eea; color:#fff; border:none; cursor:pointer; }
 </style>
 </head>
 
@@ -47,7 +47,7 @@ button { padding:12px 20px; margin-top:15px; background:#667eea; color:#fff; bor
 const rows = document.getElementById('rows');
 addRow();
 
-/* AUTO SLUG */
+/* SLUGIFY */
 function slugify(text) {
   return text.toString().normalize('NFD')
     .replace(/[\u0300-\u036f]/g,'')
@@ -84,11 +84,11 @@ async function buildPDF(data) {
     compress: true
   });
 
-  /* ✅ SEO PDF METADATA (GOOGLE READS THIS) */
+  /* PDF SEO METADATA (NO XMP) */
   doc.setProperties({
     title: data.title_pdf,
-    subject: data.title_book,
     author: data.author,
+    subject: data.title_book,
     keywords: `${data.title_book}, ebook, pdf, download`,
     creator: data.author
   });
@@ -119,12 +119,17 @@ Haz clic abajo para descargar el ebook ${data.title_book}.`,
 W/2, 450, { align:'center', maxWidth:420 }
   );
 
-  doc.setFillColor(46,204,113);
-  doc.roundedRect((W-260)/2, 690, 260, 48, 8, 8, 'F');
-  doc.setTextColor(255);
-  doc.text('DOWNLOAD', W/2, 722, { align:'center' });
-  doc.link((W-260)/2, 690, 260, 48, { url:data.link });
-  doc.setTextColor(0);
+  /* === IMPROVED DOWNLOAD BUTTON === */
+  doc.setFillColor(52, 84, 209);
+  doc.roundedRect((W - 280) / 2, 685, 280, 52, 10, 10, 'F');
+
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(16);
+  doc.setTextColor(255,255,255);
+  doc.text('⬇ DOWNLOAD PDF', W/2, 718, { align:'center' });
+
+  doc.link((W - 280) / 2, 685, 280, 52, { url:data.link });
+  doc.setTextColor(0,0,0);
 
   /* FIXED TOTAL 5–6 PAGES */
   const previews = [
