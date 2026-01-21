@@ -119,17 +119,43 @@ Haz clic abajo para descargar el ebook ${data.title_book}.`,
 W/2, 450, { align:'center', maxWidth:420 }
   );
 
-  /* === IMPROVED DOWNLOAD BUTTON === */
-  doc.setFillColor(52, 84, 209);
-  doc.roundedRect((W - 280) / 2, 685, 280, 52, 10, 10, 'F');
+  /* === DOWNLOAD BUTTON (NAVY BLUE, CLEAN) === */
 
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(16);
-  doc.setTextColor(255,255,255);
-  doc.text('⬇ DOWNLOAD PDF', W/2, 718, { align:'center' });
+// Navy blue background
+doc.setFillColor(16, 32, 96); // navy blue
+doc.roundedRect(
+  (W - 280) / 2,
+  685,
+  280,
+  52,
+  10,
+  10,
+  'F'
+);
 
-  doc.link((W - 280) / 2, 685, 280, 52, { url:data.link });
-  doc.setTextColor(0,0,0);
+// Button text (centered, white)
+doc.setFont('helvetica', 'bold');
+doc.setFontSize(16);
+doc.setTextColor(255, 255, 255);
+doc.text(
+  'DOWNLOAD PDF',
+  W / 2,
+  718,
+  { align: 'center', baseline: 'middle' }
+);
+
+// Clickable area
+doc.link(
+  (W - 280) / 2,
+  685,
+  280,
+  52,
+  { url: data.link }
+);
+
+// Reset text color
+doc.setTextColor(0, 0, 0);
+
 
   /* FIXED TOTAL 5–6 PAGES */
   const previews = [
