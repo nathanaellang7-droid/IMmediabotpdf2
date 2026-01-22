@@ -10,13 +10,123 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 <style>
-body{font-family:Arial;background:#eef1ff}
-.container{max-width:1200px;margin:auto;padding:20px}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid #ddd;padding:8px}
-input,select{width:100%;padding:6px}
-.preview img{width:70px;height:100px;object-fit:cover}
-button{padding:12px 22px;margin-top:15px;background:#102060;color:#fff;border:none;cursor:pointer}
+/* ===== GLOBAL ===== */
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#eef1ff;
+  display:flex;
+  justify-content:center;
+}
+
+/* ===== CONTAINER ===== */
+.container{
+  width:100%;
+  max-width:1200px;
+  padding:20px;
+  text-align:center;
+}
+
+/* ===== TITLE ===== */
+h1{
+  margin-bottom:20px;
+  color:#102060;
+  font-size:28px;
+}
+
+/* ===== TABLE ===== */
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+th, td{
+  border:1px solid #ddd;
+  padding:8px;
+  font-size:13px;
+}
+
+th{
+  background:#f3f5ff;
+  color:#102060;
+  text-align:center;
+}
+
+td{
+  text-align:left;
+  vertical-align:middle;
+}
+
+/* ===== INPUTS ===== */
+input, select{
+  width:100%;
+  padding:6px 8px;
+  font-size:13px;
+  border:1px solid #ccc;
+  border-radius:4px;
+}
+
+/* ===== PREVIEW ===== */
+.preview{
+  text-align:center;
+}
+
+.preview img{
+  width:70px;
+  height:100px;
+  object-fit:cover;
+  border-radius:4px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* ===== BUTTONS ===== */
+button{
+  margin:15px 6px 0;
+  padding:12px 26px;
+  background:#102060;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:14px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 4px 8px rgba(0,0,0,0.2);
+  transition:all 0.2s ease;
+}
+
+button:hover{
+  background:#0b1745;
+  transform:translateY(-1px);
+}
+
+button:active{
+  transform:translateY(0);
+  box-shadow:0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+  table{
+    font-size:12px;
+  }
+
+  h1{
+    font-size:22px;
+  }
+
+  button{
+    width:100%;
+    margin-top:10px;
+  }
+}
 </style>
 </head>
 
