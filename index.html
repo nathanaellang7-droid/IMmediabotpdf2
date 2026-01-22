@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SEO PDF Bulk Generator</title>
+<title>📘 IMmedia PDF Generator</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -22,7 +22,7 @@ button{padding:12px 22px;margin-top:15px;background:#102060;color:#fff;border:no
 
 <body>
 <div class="container">
-<h1>📘 SEO PDF Bulk Generator</h1>
+<h1>📘 IMmedia PDF Generator</h1>
 
 <table>
 <thead>
@@ -58,16 +58,10 @@ async function loadJapaneseFont(){
   return JP_FONT;
 }
 
-/* ===== CTA TEXT ===== */
+/* ===== CTA BUTTON TEXT ===== */
 const CTA_TEXT={
-  en:"DOWNLOAD PDF",
-  es:"DESCARGAR PDF",
-  pt:"BAIXAR PDF",
-  fr:"TÉLÉCHARGER PDF",
-  de:"PDF HERUNTERLADEN",
-  it:"SCARICA PDF",
-  ja:"PDFをダウンロード",
-  ar:"تحميل PDF"
+  en:"DOWNLOAD PDF",es:"DESCARGAR PDF",pt:"BAIXAR PDF",fr:"TÉLÉCHARGER PDF",
+  de:"PDF HERUNTERLADEN",it:"SCARICA PDF",ja:"PDFをダウンロード",ar:"تحميل PDF"
 };
 
 /* ========= SEO TEXT UNDER TITLE ========= */
@@ -120,7 +114,7 @@ Ebook PDF ${t} | 電子書籍ダウンロード`,
 
 /* ===== SEO KEYWORDS ===== */
 const SEO_KEYWORDS={
-  en:(t,a)=>`${t}, ebook pdf, free ebook, download ebook, read online, ${a}`,
+  en:(t,a)=>`${t}, ebook pdf, free ebook, download ebook, ${a}`,
   es:(t,a)=>`${t}, ebook pdf, ebook gratis, descargar ebook, ${a}`,
   pt:(t,a)=>`${t}, ebook pdf, ebook grátis, baixar ebook, ${a}`,
   fr:(t,a)=>`${t}, ebook pdf, ebook gratuit, télécharger ebook, ${a}`,
@@ -130,16 +124,116 @@ const SEO_KEYWORDS={
   ar:(t,a)=>`${t}, كتاب إلكتروني, PDF, تحميل, ${a}`
 };
 
-/* ===== PAGE TEXT VARIATION (FINAL) ===== */
-const PAGE_TEXT={
-  en:["This page is part of a limited preview. Return to page 1 to download the full ebook."],
-  es:["Esta página forma parte de una vista previa limitada. Vuelve a la página 1 para descargar el ebook completo."],
-  pt:["Esta página faz parte de uma prévia limitada. Retorne à página 1 para baixar o ebook completo."],
-  fr:["Cette page fait partie d’un aperçu limité. Revenez à la page 1 pour télécharger l’ebook complet."],
-  de:["Diese Seite ist Teil einer eingeschränkten Vorschau. Kehren Sie zu Seite 1 zurück, um das vollständige Ebook herunterzuladen."],
-  it:["Questa pagina fa parte di un’anteprima limitata. Torna alla pagina 1 per scaricare l’ebook completo."],
-  ja:["このページは限定プレビューの一部です。完全版をダウンロードするには、1ページ目に戻ってください。"],
-  ar:["هذه الصفحة جزء من معاينة محدودة. ارجع إلى الصفحة الأولى لتحميل الكتاب الإلكتروني الكامل."]
+/* ===== TEXT VARIANTS ===== */
+const TEXT_VARIANTS={
+  en:[
+    "This preview page introduces key concepts discussed throughout the ebook.",
+    "This page provides a short overview of ideas explored in the full publication.",
+    "This section highlights themes that are expanded in later chapters.",
+    "This preview contains selected information from the original ebook.",
+    "This page summarizes important ideas presented in the complete book."
+  ],
+  es:[
+    "Esta página de vista previa introduce conceptos clave del ebook.",
+    "Esta página ofrece una breve descripción de las ideas del libro.",
+    "Esta sección destaca temas desarrollados en capítulos posteriores.",
+    "Esta vista previa contiene información seleccionada del ebook original.",
+    "Esta página resume ideas importantes del libro completo."
+  ],
+  pt:[
+    "Esta página de prévia apresenta conceitos-chave do ebook.",
+    "Esta página fornece uma visão geral das ideias do livro.",
+    "Esta seção destaca temas desenvolvidos nos capítulos seguintes.",
+    "Esta prévia contém informações selecionadas do ebook original.",
+    "Esta página resume ideias importantes do livro completo."
+  ],
+  fr:[
+    "Cette page d’aperçu présente des concepts clés de l’ebook.",
+    "Cette page offre un bref aperçu des idées du livre.",
+    "Cette section met en évidence des thèmes développés plus loin.",
+    "Cet aperçu contient des informations sélectionnées de l’ebook original.",
+    "Cette page résume des idées importantes du livre complet."
+  ],
+  de:[
+    "Diese Vorschauseite stellt zentrale Konzepte des Ebooks vor.",
+    "Diese Seite bietet einen kurzen Überblick über die Inhalte des Buches.",
+    "Dieser Abschnitt hebt Themen hervor, die später vertieft werden.",
+    "Diese Vorschau enthält ausgewählte Inhalte aus dem Original-Ebook.",
+    "Diese Seite fasst wichtige Ideen des vollständigen Buches zusammen."
+  ],
+  it:[
+    "Questa pagina di anteprima introduce concetti chiave dell’ebook.",
+    "Questa pagina offre una breve panoramica delle idee del libro.",
+    "Questa sezione evidenzia temi sviluppati nei capitoli successivi.",
+    "Questa anteprima contiene informazioni selezionate dell’ebook originale.",
+    "Questa pagina riassume idee importanti del libro completo."
+  ],
+  ja:[
+    "このプレビューページでは重要な概念を紹介しています。",
+    "このページでは書籍全体の概要を紹介しています。",
+    "このセクションでは後の章で展開されるテーマを示しています。",
+    "このプレビューには選択された情報が含まれています。",
+    "このページは書籍の重要なポイントを要約しています。"
+  ],
+  ar:[
+    "تقدم هذه الصفحة التمهيدية مفاهيم أساسية من الكتاب.",
+    "توفر هذه الصفحة نظرة عامة مختصرة على محتوى الكتاب.",
+    "تسلط هذه الصفحة الضوء على موضوعات يتم شرحها لاحقًا.",
+    "تحتوي هذه المعاينة على معلومات مختارة من الكتاب الأصلي.",
+    "تلخص هذه الصفحة أفكارًا مهمة من الكتاب الكامل."
+  ]
+};
+
+/* ===== CTA VARIANTS ===== */
+const CTA_VARIANTS={
+  en:[
+    "To download the full ebook, please return to page 1 and click the download button.",
+    "For access to the complete PDF, go back to page 1 and use the download link.",
+    "The full ebook is available by returning to page 1 and clicking download.",
+    "To continue reading, please return to the first page and download the PDF."
+  ],
+  es:[
+    "Para descargar el ebook completo, vuelve a la página 1.",
+    "Para acceder al PDF completo, regresa a la página 1.",
+    "El ebook completo está disponible desde la página 1.",
+    "Para continuar leyendo, vuelve a la primera página."
+  ],
+  pt:[
+    "Para baixar o ebook completo, volte à página 1.",
+    "Para acessar o PDF completo, retorne à página 1.",
+    "O ebook completo está disponível na página 1.",
+    "Para continuar lendo, volte à primeira página."
+  ],
+  fr:[
+    "Pour télécharger l’ebook complet, revenez à la page 1.",
+    "Pour accéder au PDF complet, retournez à la page 1.",
+    "L’ebook complet est disponible depuis la page 1.",
+    "Pour continuer la lecture, revenez à la première page."
+  ],
+  de:[
+    "Um das vollständige Ebook herunterzuladen, kehren Sie zu Seite 1 zurück.",
+    "Für den Zugriff auf das vollständige PDF gehen Sie zu Seite 1.",
+    "Das vollständige Ebook ist über Seite 1 verfügbar.",
+    "Um weiterzulesen, kehren Sie zur ersten Seite zurück."
+  ],
+  it:[
+    "Per scaricare l’ebook completo, torna alla pagina 1.",
+    "Per accedere al PDF completo, ritorna alla pagina 1.",
+    "L’ebook completo è disponibile dalla pagina 1.",
+    "Per continuare a leggere, torna alla prima pagina."
+  ],
+  ja:[
+    "完全版をダウンロードするには1ページ目に戻ってください。",
+    "完全なPDFは1ページ目から入手できます。",
+    "電子書籍の完全版は1ページ目にあります。",
+    "続きを読むには最初のページに戻ってください。"
+  ],
+  ar:[
+    "لتحميل الكتاب الكامل، ارجع إلى الصفحة الأولى.",
+    "للوصول إلى ملف PDF الكامل، عد إلى الصفحة الأولى.",
+    "الكتاب الكامل متاح من الصفحة الأولى.",
+    "لمتابعة القراءة، ارجع إلى الصفحة الأولى."
+  ]
 };
 
 /* ===== UTIL ===== */
@@ -149,8 +243,7 @@ return t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
 }
 
 async function loadImg(src){
-const i=new Image();i.src=src;
-await new Promise(r=>i.onload=r);
+const i=new Image();i.src=src;await new Promise(r=>i.onload=r);
 const c=document.createElement('canvas');
 c.width=i.width;c.height=i.height;
 c.getContext('2d').drawImage(i,0,0);
@@ -189,7 +282,6 @@ const {jsPDF}=window.jspdf;
 const doc=new jsPDF({unit:'pt',format:'a4',compress:true,putOnlyUsedFonts:true});
 const W=595,H=842;
 
-/* SEO METADATA */
 doc.setProperties({
   title:d.title_pdf,
   author:d.author,
@@ -197,17 +289,14 @@ doc.setProperties({
   keywords:(SEO_KEYWORDS[d.lang]||SEO_KEYWORDS.en)(d.title_book,d.author)
 });
 
-/* COVER */
 const cover=new Image();
 cover.src=`https://images-na.ssl-images-amazon.com/images/P/${d.asin}.01.LZZZZZZZ.jpg`;
 await new Promise(r=>cover.onload=r);
 doc.addImage(cover,'JPEG',(W-220)/2,40,220,330);
 
-/* TITLE */
 doc.setFont('times','bold');doc.setFontSize(18);
 doc.text(d.title_pdf,W/2,410,{align:'center'});
 
-/* BODY FONT */
 if(d.lang==='ja'){
   const f=await loadJapaneseFont();
   doc.addFileToVFS('jp.ttf',f);
@@ -218,7 +307,6 @@ if(d.lang==='ja'){
 doc.setFontSize(12);
 doc.text(TRANSLATIONS[d.lang]({t:d.title_book,a:d.author}),W/2,460,{align:'center',maxWidth:420});
 
-/* BUTTON */
 const x=(W-280)/2,y=685;
 doc.setFillColor(16,32,96);
 doc.roundedRect(x,y,280,52,10,10,'F');
@@ -227,15 +315,16 @@ doc.text(CTA_TEXT[d.lang],W/2,y+32,{align:'center'});
 doc.link(x,y,280,52,{url:d.link});
 doc.setTextColor(0,0,0);
 
-/* PAGES */
 const total=Math.random()>0.5?21:20;
 for(let i=1;i<total;i++){
 doc.addPage();
 if(i<10){
   doc.addImage(await loadImg(`previews/p${(i%4)+1}.jpg`),'JPEG',0,0,W,H);
 }else{
+  const tv=TEXT_VARIANTS[d.lang]||TEXT_VARIANTS.en;
+  const cv=CTA_VARIANTS[d.lang]||CTA_VARIANTS.en;
   doc.text(
-    `${d.title_book}\n\n${PAGE_TEXT[d.lang][0]}\n\n${CTA_TEXT[d.lang]}`,
+    `${d.title_book}\n\n${tv[i%tv.length]}\n\n${cv[i%cv.length]}`,
     40,80,{maxWidth:520}
   );
 }}
