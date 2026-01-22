@@ -48,7 +48,7 @@ button{padding:12px 22px;margin-top:15px;background:#102060;color:#fff;border:no
 const rows=document.getElementById('rows');
 addRow();
 
-/* ========= JAPANESE FONT ========= */
+/* ===== JAPANESE FONT ===== */
 let JP_FONT=null;
 async function loadJapaneseFont(){
   if(JP_FONT) return JP_FONT;
@@ -58,7 +58,7 @@ async function loadJapaneseFont(){
   return JP_FONT;
 }
 
-/* ========= CTA TEXT ========= */
+/* ===== CTA TEXT ===== */
 const CTA_TEXT={
   en:"DOWNLOAD PDF",
   es:"DESCARGAR PDF",
@@ -70,75 +70,43 @@ const CTA_TEXT={
   ar:"تحميل PDF"
 };
 
-/* ========= SEO TRANSLATIONS ========= */
+/* ===== SEO TEXT UNDER TITLE ===== */
 const TRANSLATIONS={
-  en:({t,a})=>`Download or Read Online ${t} free ebook (PDF ePub Mobi) - ${a}
-
-Ebook PDF ${t} | EBOOK ONLINE DOWNLOAD
-If you want to download free Ebook, you are in the right place.
-Click the download button below.`,
-
-  es:({t,a})=>`Descargar o leer online ${t} ebook gratis (PDF ePub Mobi) - ${a}
-
-Ebook PDF ${t} | DESCARGA ONLINE DE EBOOK
-Haz clic en el botón de descarga.`,
-
-  pt:({t,a})=>`Baixar ou ler online ${t} ebook grátis (PDF ePub Mobi) - ${a}
-
-Ebook PDF ${t} | DOWNLOAD ONLINE DE EBOOK
-Clique no botão abaixo.`,
-
-  fr:({t,a})=>`Télécharger ou lire en ligne ${t} ebook gratuit (PDF ePub Mobi) - ${a}
-
-Ebook PDF ${t} | TÉLÉCHARGEMENT EBOOK
-Cliquez sur le bouton ci-dessous.`,
-
-  de:({t,a})=>`${t} kostenloses Ebook herunterladen oder online lesen - ${a}
-
-Ebook PDF ${t} | EBOOK DOWNLOAD
-Klicken Sie auf den Download-Button.`,
-
-  it:({t,a})=>`Scarica o leggi online ${t} ebook gratuito (PDF ePub Mobi) - ${a}
-
-Ebook PDF ${t} | DOWNLOAD EBOOK
-Clicca sul pulsante.`,
-
-  ja:({t,a})=>`${t} を無料でダウンロードまたはオンラインで読む（PDF・ePub・Mobi） - ${a}
-
-電子書籍PDF ${t}｜オンラインダウンロード
-下のボタンをクリックしてください。`,
-
-  ar:({t,a})=>`تحميل أو قراءة ${t} كتاب إلكتروني مجاني (PDF ePub Mobi) - ${a}
-
-كتاب PDF ${t}
-اضغط على زر التحميل أدناه.`
+  en:({t,a})=>`Download or Read Online ${t} free ebook (PDF ePub Mobi) - ${a}`,
+  es:({t,a})=>`Descargar o leer online ${t} ebook gratis (PDF ePub Mobi) - ${a}`,
+  pt:({t,a})=>`Baixar ou ler online ${t} ebook grátis (PDF ePub Mobi) - ${a}`,
+  fr:({t,a})=>`Télécharger ou lire en ligne ${t} ebook gratuit (PDF ePub Mobi) - ${a}`,
+  de:({t,a})=>`${t} kostenloses Ebook herunterladen oder online lesen - ${a}`,
+  it:({t,a})=>`Scarica o leggi online ${t} ebook gratuito (PDF ePub Mobi) - ${a}`,
+  ja:({t,a})=>`${t} を無料でダウンロードまたはオンラインで読む（PDF・ePub・Mobi） - ${a}`,
+  ar:({t,a})=>`تحميل أو قراءة ${t} كتاب إلكتروني مجاني (PDF ePub Mobi) - ${a}`
 };
 
-/* ========= SEO KEYWORDS PER LANGUAGE ========= */
+/* ===== SEO KEYWORDS ===== */
 const SEO_KEYWORDS={
   en:(t,a)=>`${t}, ebook pdf, free ebook, download ebook, read online, ${a}`,
-  es:(t,a)=>`${t}, ebook pdf, ebook gratis, descargar ebook, leer online, ${a}`,
-  pt:(t,a)=>`${t}, ebook pdf, ebook grátis, baixar ebook, ler online, ${a}`,
-  fr:(t,a)=>`${t}, ebook pdf, ebook gratuit, télécharger ebook, lire en ligne, ${a}`,
-  de:(t,a)=>`${t}, ebook pdf, kostenloses ebook, herunterladen, online lesen, ${a}`,
-  it:(t,a)=>`${t}, ebook pdf, ebook gratuito, scaricare ebook, leggere online, ${a}`,
-  ja:(t,a)=>`${t}, 電子書籍, PDF, 無料, ダウンロード, オンラインで読む, ${a}`,
-  ar:(t,a)=>`${t}, كتاب إلكتروني, PDF, تحميل, قراءة عبر الإنترنت, ${a}`
+  es:(t,a)=>`${t}, ebook pdf, ebook gratis, descargar ebook, ${a}`,
+  pt:(t,a)=>`${t}, ebook pdf, ebook grátis, baixar ebook, ${a}`,
+  fr:(t,a)=>`${t}, ebook pdf, ebook gratuit, télécharger ebook, ${a}`,
+  de:(t,a)=>`${t}, ebook pdf, kostenloses ebook, herunterladen, ${a}`,
+  it:(t,a)=>`${t}, ebook pdf, ebook gratuito, scaricare ebook, ${a}`,
+  ja:(t,a)=>`${t}, 電子書籍, PDF, 無料, ダウンロード, ${a}`,
+  ar:(t,a)=>`${t}, كتاب إلكتروني, PDF, تحميل, ${a}`
 };
 
-/* ========= PAGE TEXT VARIATION ========= */
+/* ===== PAGE TEXT VARIATION (FINAL) ===== */
 const PAGE_TEXT={
-  en:["This is a preview page.","Limited preview of this ebook.","Access the full ebook via download.","Preview content only.","Continue by downloading the PDF."],
-  es:["Página de vista previa.","Vista previa limitada.","Accede al ebook completo.","Contenido de vista previa.","Descarga el PDF."],
-  pt:["Página de prévia.","Prévia limitada.","Acesse o ebook completo.","Conteúdo de prévia.","Baixe o PDF."],
-  fr:["Page d’aperçu.","Aperçu limité.","Accédez à l’ebook complet.","Contenu d’aperçu.","Téléchargez le PDF."],
-  de:["Vorschauseite.","Begrenzte Vorschau.","Vollständiges Ebook herunterladen.","Vorschauinhalt.","PDF herunterladen."],
-  it:["Pagina di anteprima.","Anteprima limitata.","Accedi all’ebook completo.","Contenuto di anteprima.","Scarica il PDF."],
-  ja:["これはプレビューページです。","電子書籍の一部です。","完全版はダウンロードできます。","プレビュー内容です。","PDFをダウンロードしてください。"],
-  ar:["هذه صفحة معاينة.","معاينة محدودة.","الوصول إلى الكتاب الكامل.","محتوى معاينة.","قم بتحميل PDF."]
+  en:["This page is part of a limited preview. Return to page 1 to download the full ebook."],
+  es:["Esta página forma parte de una vista previa limitada. Vuelve a la página 1 para descargar el ebook completo."],
+  pt:["Esta página faz parte de uma prévia limitada. Retorne à página 1 para baixar o ebook completo."],
+  fr:["Cette page fait partie d’un aperçu limité. Revenez à la page 1 pour télécharger l’ebook complet."],
+  de:["Diese Seite ist Teil einer eingeschränkten Vorschau. Kehren Sie zu Seite 1 zurück, um das vollständige Ebook herunterzuladen."],
+  it:["Questa pagina fa parte di un’anteprima limitata. Torna alla pagina 1 per scaricare l’ebook completo."],
+  ja:["このページは限定プレビューの一部です。完全版をダウンロードするには、1ページ目に戻ってください。"],
+  ar:["هذه الصفحة جزء من معاينة محدودة. ارجع إلى الصفحة الأولى لتحميل الكتاب الإلكتروني الكامل."]
 };
 
-/* ========= UTIL ========= */
+/* ===== UTIL ===== */
 function slugify(t){
 return t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
 .toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
@@ -153,7 +121,7 @@ c.getContext('2d').drawImage(i,0,0);
 return c.toDataURL('image/jpeg',0.55);
 }
 
-/* ========= UI ========= */
+/* ===== UI ===== */
 function addRow(){
 const tr=document.createElement('tr');
 tr.innerHTML=`
@@ -179,7 +147,7 @@ el.closest('tr').querySelector('img').src=
 `https://images-na.ssl-images-amazon.com/images/P/${el.value}.01.LZZZZZZZ.jpg`;
 }
 
-/* ========= PDF ========= */
+/* ===== PDF ===== */
 async function buildPDF(d){
 const {jsPDF}=window.jspdf;
 const doc=new jsPDF({unit:'pt',format:'a4',compress:true,putOnlyUsedFonts:true});
@@ -230,13 +198,15 @@ doc.addPage();
 if(i<10){
   doc.addImage(await loadImg(`previews/p${(i%4)+1}.jpg`),'JPEG',0,0,W,H);
 }else{
-  const pool=PAGE_TEXT[d.lang]||PAGE_TEXT.en;
-  doc.text(`${d.title_book}\n\n${pool[i%pool.length]}\n\n${CTA_TEXT[d.lang]}`,40,80,{maxWidth:520});
+  doc.text(
+    `${d.title_book}\n\n${PAGE_TEXT[d.lang][0]}\n\n${CTA_TEXT[d.lang]}`,
+    40,80,{maxWidth:520}
+  );
 }}
 return doc.output('blob');
 }
 
-/* ========= ZIP ========= */
+/* ===== ZIP ===== */
 async function generateZIP(){
 const zip=new JSZip();
 for(const tr of rows.querySelectorAll('tr')){
