@@ -10,13 +10,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 <style>
-body { font-family: Arial, sans-serif; background:#eef1ff; }
-.container { max-width:1200px; margin:auto; padding:20px; }
-table { width:100%; border-collapse:collapse; }
-th,td { border:1px solid #ddd; padding:8px; }
-input { width:100%; padding:6px; }
-.preview img { width:70px; height:100px; object-fit:cover; }
-button { padding:12px 20px; margin-top:15px; background:#102060; color:#fff; border:none; cursor:pointer; }
+body{font-family:Arial;background:#eef1ff}
+.container{max-width:1200px;margin:auto;padding:20px}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #ddd;padding:8px}
+input,select{width:100%;padding:6px}
+.preview img{width:70px;height:100px;object-fit:cover}
+button{padding:12px 20px;margin-top:15px;background:#102060;color:#fff;border:none;cursor:pointer}
 </style>
 </head>
 
@@ -27,11 +27,12 @@ button { padding:12px 20px; margin-top:15px; background:#102060; color:#fff; bor
 <table>
 <thead>
 <tr>
-<th>OUTPUT FILE NAME</th>
+<th>OUTPUT FILE</th>
 <th>TITLE PDF (SEO)</th>
 <th>TITLE BOOK</th>
 <th>AUTHOR</th>
 <th>DOWNLOAD LINK</th>
+<th>LANG</th>
 <th>ASIN</th>
 <th>Preview</th>
 </tr>
@@ -44,183 +45,190 @@ button { padding:12px 20px; margin-top:15px; background:#102060; color:#fff; bor
 </div>
 
 <script>
-const rows = document.getElementById('rows');
+const rows=document.getElementById('rows');
 addRow();
 
-/* ========= TEXT VARIATION DATA ========= */
-const TEXT_VARIANTS = [
-  'This preview page introduces key concepts discussed throughout the ebook.',
-  'This page provides a short overview of ideas explored in the full publication.',
-  'This section highlights themes that are expanded in later chapters.',
-  'This preview contains selected information from the original ebook.',
-  'This page summarizes important ideas presented in the complete book.'
-];
+/* ================= TEXT TRANSLATIONS ================= */
+const TRANSLATIONS={
+en:({t,a})=>`Download or Read Online ${t} free ebook (PDF ePub Mobi) - ${a}
 
-const CTA_VARIANTS = [
-  'To download the full ebook, please return to page 1 and click the download button.',
-  'For access to the complete PDF, go back to page 1 and use the download link.',
-  'The full ebook is available by returning to page 1 and clicking download.',
-  'To continue reading, please return to the first page and download the PDF.'
-];
+Ebook PDF ${t} | EBOOK ONLINE DOWNLOAD
+If you want to download free Ebook, you are in the right place to download Ebook.
+Ebook/PDF ${t} DOWNLOAD in English is available for free here.
+Click on the download LINK below to download Ebook ${t} PDF Download by ${a} (Author).`,
 
-/* ========= SLUG ========= */
-function slugify(text) {
-  return text.toString().normalize('NFD')
-    .replace(/[\u0300-\u036f]/g,'')
-    .toLowerCase().trim()
-    .replace(/[^a-z0-9]+/g,'-')
-    .replace(/^-+|-+$/g,'');
+es:({t,a})=>`Descargar o leer online ${t} ebook gratis (PDF ePub Mobi) - ${a}
+
+Ebook PDF ${t} | DESCARGA ONLINE DE EBOOKS
+Si quieres descargar un Ebook gratis, estás en el lugar correcto.
+El Ebook/PDF ${t} está disponible gratis aquí.
+Haz clic en el enlace de descarga para obtener ${t} de ${a}.`,
+
+pt:({t,a})=>`Baixar ou ler online ${t} ebook grátis (PDF ePub Mobi) - ${a}
+
+Ebook PDF ${t} | DOWNLOAD DE EBOOK
+Se você quer baixar Ebook grátis, este é o lugar certo.
+O Ebook/PDF ${t} está disponível gratuitamente aqui.
+Clique no link abaixo para baixar ${t} de ${a}.`,
+
+fr:({t,a})=>`Télécharger ou lire en ligne ${t} ebook gratuit (PDF ePub Mobi) - ${a}
+
+Ebook PDF ${t} | TÉLÉCHARGEMENT EBOOK
+Si vous souhaitez télécharger un Ebook gratuit, vous êtes au bon endroit.
+L’Ebook ${t} est disponible gratuitement ici.`,
+
+de:({t,a})=>`${t} kostenloses Ebook herunterladen oder online lesen (PDF ePub Mobi) - ${a}
+
+Ebook PDF ${t} | EBOOK DOWNLOAD
+Wenn Sie ein kostenloses Ebook suchen, sind Sie hier richtig.`,
+
+it:({t,a})=>`Scarica o leggi online ${t} ebook gratuito (PDF ePub Mobi) - ${a}
+
+Ebook PDF ${t} | DOWNLOAD EBOOK
+Se vuoi scaricare Ebook gratuiti, sei nel posto giusto.`,
+
+ja:({t,a})=>`${t} 無料電子書籍をダウンロードまたはオンラインで読む (PDF ePub Mobi) - ${a}
+
+Ebook PDF ${t} | 電子書籍ダウンロード`,
+
+ar:({t,a})=>`تحميل أو قراءة ${t} كتاب إلكتروني مجاني (PDF ePub Mobi) - ${a}
+
+كتاب PDF ${t} | تحميل كتاب إلكتروني`
+};
+
+/* ================= KEYWORDS PER LANGUAGE ================= */
+const KEYWORDS_BY_LANG={
+en:(t,a)=>`${t}, ebook pdf, free ebook, download ebook, read online, pdf epub mobi, ${a}`,
+es:(t,a)=>`${t}, ebook gratis, descargar ebook, leer online, pdf epub mobi, ${a}`,
+pt:(t,a)=>`${t}, ebook grátis, baixar ebook, ler online, pdf epub mobi, ${a}`,
+fr:(t,a)=>`${t}, ebook gratuit, télécharger ebook, lire en ligne, pdf epub mobi, ${a}`,
+de:(t,a)=>`${t}, kostenloses ebook, ebook herunterladen, online lesen, pdf epub mobi, ${a}`,
+it:(t,a)=>`${t}, ebook gratuito, scaricare ebook, leggere online, pdf epub mobi, ${a}`,
+ja:(t,a)=>`${t}, 電子書籍 無料, ebook ダウンロード, オンラインで読む, pdf epub mobi, ${a}`,
+ar:(t,a)=>`${t}, كتاب إلكتروني مجاني, تحميل كتاب, قراءة عبر الإنترنت, pdf epub mobi, ${a}`
+};
+
+/* ================= UTILITIES ================= */
+function slugify(t){
+return t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 }
 
-/* ========= IMAGE RESIZE (ULTRA LIGHT) ========= */
-async function loadAndResizeImage(src) {
-  const img = new Image();
-  img.src = src;
-  await new Promise(r => img.onload = r);
-
-  const MAX = 1000;
-  const ratio = Math.min(MAX / img.width, MAX / img.height, 1);
-
-  const canvas = document.createElement('canvas');
-  canvas.width = img.width * ratio;
-  canvas.height = img.height * ratio;
-
-  canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-  return canvas.toDataURL('image/jpeg', 0.55);
+async function loadAndResizeImage(src){
+const img=new Image();img.src=src;
+await new Promise(r=>img.onload=r);
+const MAX=1000,r=Math.min(MAX/img.width,MAX/img.height,1);
+const c=document.createElement('canvas');
+c.width=img.width*r;c.height=img.height*r;
+c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+return c.toDataURL('image/jpeg',0.55);
 }
 
-/* ========= UI ========= */
-function addRow() {
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td><input class="out"></td>
-    <td><input class="pdf"></td>
-    <td><input class="title"></td>
-    <td><input class="author"></td>
-    <td><input class="link"></td>
-    <td><input class="asin" oninput="preview(this)"></td>
-    <td class="preview"><img></td>
-  `;
-  rows.appendChild(tr);
+/* ================= UI ================= */
+function addRow(){
+const tr=document.createElement('tr');
+tr.innerHTML=`
+<td><input class="out"></td>
+<td><input class="pdf"></td>
+<td><input class="title"></td>
+<td><input class="author"></td>
+<td><input class="link"></td>
+<td>
+<select class="lang">
+<option value="en">English</option>
+<option value="es">Spanish</option>
+<option value="pt">Portuguese</option>
+<option value="fr">French</option>
+<option value="de">German</option>
+<option value="it">Italian</option>
+<option value="ja">Japanese</option>
+<option value="ar">Arabic</option>
+</select>
+</td>
+<td><input class="asin" oninput="preview(this)"></td>
+<td class="preview"><img></td>`;
+rows.appendChild(tr);
 }
 
-function preview(el) {
-  el.closest('tr').querySelector('img').src =
-    `https://images-na.ssl-images-amazon.com/images/P/${el.value}.01.LZZZZZZZ.jpg`;
+function preview(el){
+el.closest('tr').querySelector('img').src=
+`https://images-na.ssl-images-amazon.com/images/P/${el.value}.01.LZZZZZZZ.jpg`;
 }
 
-/* ========= PDF BUILDER ========= */
-async function buildPDF(data) {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'pt', format:'a4', compress:true });
+/* ================= PDF ================= */
+async function buildPDF(d){
+const {jsPDF}=window.jspdf;
+const doc=new jsPDF({unit:'pt',format:'a4',compress:true});
 
-  doc.setProperties({
-    title: data.title_pdf,
-    author: data.author,
-    subject: data.title_book,
-    keywords: `${data.title_book}, ebook, pdf, download`
-  });
+doc.setProperties({
+title:d.title_pdf,
+author:d.author,
+subject:d.title_book,
+keywords:KEYWORDS_BY_LANG[d.lang](d.title_book,d.author)
+});
 
-  const W = 595, H = 842;
+const W=595,H=842;
 
-  /* PAGE 1 */
-  const cover = new Image();
-  cover.crossOrigin = "anonymous";
-  cover.src = `https://images-na.ssl-images-amazon.com/images/P/${data.asin}.01.LZZZZZZZ.jpg`;
-  await new Promise(r => cover.onload = r);
+/* PAGE 1 */
+const cover=new Image();
+cover.src=`https://images-na.ssl-images-amazon.com/images/P/${d.asin}.01.LZZZZZZZ.jpg`;
+await new Promise(r=>cover.onload=r);
 
-  doc.addImage(cover,'JPEG',(W-220)/2,40,220,330,undefined,'FAST');
+doc.addImage(cover,'JPEG',(W-220)/2,40,220,330);
+doc.setFont('times','bold');doc.setFontSize(18);
+doc.text(d.title_pdf,W/2,410,{align:'center'});
 
-  doc.setFont('times','bold');
-  doc.setFontSize(18);
-  doc.text(data.title_pdf,W/2,410,{align:'center'});
-
-  doc.setFont('times','normal');
-  doc.setFontSize(12);
-  doc.text(
-`Free ebook preview: ${data.title_book}
-Author: ${data.author}
-
-This PDF contains a preview of the ebook.
-To download the complete version, click the button below.`,
+doc.setFont('times','normal');doc.setFontSize(12);
+doc.text(TRANSLATIONS[d.lang]({t:d.title_book,a:d.author}),
 W/2,460,{align:'center',maxWidth:420});
 
-  /* BUTTON */
-  const btnX=(W-280)/2, btnY=685, btnW=280, btnH=52;
-  doc.setFillColor(8,16,60);
-  doc.roundedRect(btnX+4,btnY+4,btnW,btnH,10,10,'F');
-  doc.setFillColor(16,32,96);
-  doc.roundedRect(btnX,btnY,btnW,btnH,10,10,'F');
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(16);
-  doc.setTextColor(255,255,255);
-  doc.text('DOWNLOAD PDF',W/2,btnY+btnH/2+5,{align:'center'});
-  doc.link(btnX,btnY,btnW,btnH,{url:data.link});
-  doc.setTextColor(0,0,0);
+/* BUTTON */
+const x=(W-280)/2,y=685;
+doc.setFillColor(8,16,60);doc.roundedRect(x+4,y+4,280,52,10,10,'F');
+doc.setFillColor(16,32,96);doc.roundedRect(x,y,280,52,10,10,'F');
+doc.setFont('helvetica','bold');doc.setFontSize(16);
+doc.setTextColor(255,255,255);
+doc.text('DOWNLOAD PDF',W/2,y+32,{align:'center'});
+doc.link(x,y,280,52,{url:d.link});
+doc.setTextColor(0,0,0);
 
-  /* PAGES */
-  const TOTAL = Math.random() > 0.5 ? 21 : 20;
-  const IMAGE_PAGES = 9;
-  const TEXT_PAGES = TOTAL - 1 - IMAGE_PAGES;
+/* PAGES */
+const TOTAL=Math.random()>0.5?21:20;
+for(let i=1;i<TOTAL;i++){
+doc.addPage();
+if(i<10){
+const img=await loadAndResizeImage(`previews/p${(i%4)+1}.jpg`);
+doc.addImage(img,'JPEG',0,0,W,H);
+}else{
+doc.setFontSize(12);
+doc.text(`Preview Page ${i+1}
 
-  const previews = ['previews/p1.jpg','previews/p2.jpg','previews/p3.jpg','previews/p4.jpg']
-    .sort(()=>0.5-Math.random());
+${d.title_book}
 
-  /* IMAGE PAGES */
-  for(let i=0;i<IMAGE_PAGES;i++){
-    doc.addPage();
-    const imgData = await loadAndResizeImage(previews[i%previews.length]);
-    doc.addImage(imgData,'JPEG',0,0,W,H,undefined,'FAST');
-  }
-
-  /* TEXT PAGES */
-  for(let i=0;i<TEXT_PAGES;i++){
-    doc.addPage();
-    const page = 11 + i;
-    const text = TEXT_VARIANTS[i % TEXT_VARIANTS.length];
-    const cta = CTA_VARIANTS[i % CTA_VARIANTS.length];
-
-    doc.setFont('times','normal');
-    doc.setFontSize(12);
-    doc.text(
-`Preview Page ${page}
-
-${data.title_book}
-Author: ${data.author}
-
-${text}
-
-${cta}
-
-Thank you for reading.`,
+This page is part of a limited preview.
+Return to page 1 to download the full ebook.`,
 40,80,{maxWidth:520});
-  }
-
-  return doc.output('blob');
+}}
+return doc.output('blob');
 }
 
-/* ========= ZIP ========= */
-async function generateZIP() {
-  const zip = new JSZip();
-  const trs = rows.querySelectorAll('tr');
-
-  for(const tr of trs){
-    const data = {
-      output: tr.querySelector('.out').value,
-      title_pdf: tr.querySelector('.pdf').value,
-      title_book: tr.querySelector('.title').value,
-      author: tr.querySelector('.author').value,
-      link: tr.querySelector('.link').value,
-      asin: tr.querySelector('.asin').value
-    };
-    if(!data.asin) continue;
-
-    const blob = await buildPDF(data);
-    const name = slugify(data.output || data.title_book);
-    zip.file(`${name}.pdf`, blob);
-  }
-
-  saveAs(await zip.generateAsync({type:'blob'}),'bulk-pdfs.zip');
+/* ================= ZIP ================= */
+async function generateZIP(){
+const zip=new JSZip();
+for(const tr of rows.querySelectorAll('tr')){
+const d={
+output:tr.querySelector('.out').value,
+title_pdf:tr.querySelector('.pdf').value,
+title_book:tr.querySelector('.title').value,
+author:tr.querySelector('.author').value,
+link:tr.querySelector('.link').value,
+lang:tr.querySelector('.lang').value,
+asin:tr.querySelector('.asin').value
+};
+if(!d.asin)continue;
+zip.file(`${slugify(d.output||d.title_book)}.pdf`,await buildPDF(d));
+}
+saveAs(await zip.generateAsync({type:'blob'}),'bulk-pdfs.zip');
 }
 </script>
 </body>
